@@ -212,7 +212,7 @@ server {
 
 
 server {
-    
+
     listen 443 ssl default_server;
     server_name site-stevan.stevan.tk;
     root /var/www/html/site-stevan;
@@ -222,10 +222,12 @@ server {
     ssl_certificate         /etc/letsencrypt/live/stevan.tk/fullchain.pem;
     ssl_certificate_key     /etc/letsencrypt/live/stevan.tk/privkey.pem;
     ssl_protocols TLSv1.2;
-    location ~\.php$ {
+    location  ~\.php$ {
         try_files $uri $uri/ =404;
-        fastcgi_pass 127.0.0.1:11000;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass 127.0.0.1:11000;
         fastcgi_index index.php;
+    include fastcgi_params;
     }
 }
 
